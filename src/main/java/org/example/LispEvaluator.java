@@ -21,6 +21,16 @@ public class LispEvaluator {
         if (expresion.get(0).equals("DEFUN")) {
             return evaluarDefun(expresion);
         }
+        if (expresion.get(0).equals("PRINT")) {
+            List<String> args = expresion.subList(1, expresion.size());
+            try {
+                double resultado = evaluate(args);
+                System.out.println(resultado);
+                return resultado;
+            } catch (Exception e) {
+                return Operator.evaluatePrint(args, variables);
+            }
+        }
 
         while (expresion.contains("(")) {
             int idxApertura = -1;

@@ -56,13 +56,13 @@ public class Operator {
                 throw new IllegalArgumentException("Error: Cada condición en COND debe tener al menos dos elementos.");
             }
 
-            // Extraer expresión condicional (todo excepto el último token)
+
             List<String> testExpr = condition.subList(0, condition.size() - 1);
             String action = condition.get(condition.size() - 1);
 
             boolean isTrue;
 
-            // Caso especial T
+
             if (testExpr.size() == 1 && testExpr.get(0).equals("T")) {
                 isTrue = true;
             } else {
@@ -91,5 +91,36 @@ public class Operator {
         }
 
         throw new IllegalArgumentException("Error: Ninguna condición en COND se evaluó como verdadera.");
+    }
+
+    public static double evaluatePrint(List<String> argumentos, Map<String, Double> variableMap) {
+        if (argumentos.isEmpty()) {
+            throw new IllegalArgumentException("Error: PRINT requiere al menos un argumento.");
+        }
+
+        String expresion = String.join(" ", argumentos);
+
+        // Si es una cadena entre comillas
+        if (expresion.startsWith("\"") && expresion.endsWith("\"")) {
+            String texto = expresion.substring(1, expresion.length() - 1);
+            System.out.println(texto);
+            return 1.0;
+        }
+
+        // Si es una variable
+        if (variableMap.containsKey(expresion)) {
+            double valor = variableMap.get(expresion);
+            System.out.println(valor);
+            return valor;
+        }
+
+        // Si es un número
+        try {
+            double valor = Double.parseDouble(expresion);
+            System.out.println(valor);
+            return valor;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Error: PRINT no puede evaluar el argumento complejo: " + expresion);
+        }
     }
 }

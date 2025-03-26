@@ -54,5 +54,7 @@ public class LispInterpreter {
         String expr16 = "(cubo 3)";
         System.out.println("Resultado de (cubo 3):" + evaluator.evaluate(tokenizer.tokenize(expr16)));
 
+        String expr17 = "(PRINT (+ 4 6))";
+        System.out.println("Impresión de evaluación (+ 4 6): " + evaluator.evaluate(tokenizer.tokenize(expr17)));
     }
 }
